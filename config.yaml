@@ -1,0 +1,66 @@
+parameters:
+  stdin: 'php://stdin'
+  delimiter: " "
+  column_definition_factory.class: Oncesk\LogReader\Record\ColumnDefinitionFactory
+  column_definition_factory.method: create
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+    bind:
+      $stdin: '%stdin%'
+
+  Oncesk\LogReader\:
+    resource: 'src/*'
+    exclude:
+      - 'src/{ConsoleCommand}'
+      - 'src/SourceLog/FileResource.php'
+      - 'src/SourceLog/Reader/FileResourceReader.php'
+      - 'src/Record/ColumnDefinition.php'
+      - 'src/Record/Record.php'
+
+  Oncesk\LogReader\SourceLog\SourceDeterminerInterface:
+    class: Oncesk\LogReader\SourceLog\SourceDeterminer
+    public: true
+
+  Oncesk\LogReader\SourceLog\FileResourceFactoryInterface:
+    class: Oncesk\LogReader\SourceLog\FileResourceFactory
+    public: true
+
+  Oncesk\LogReader\SourceLog\Filter\FilterInterface:
+    class: Oncesk\LogReader\SourceLog\Filter\CompositeFilter
+    calls:
+      - [add, ['@Oncesk\LogReader\SourceLog\Filter\SimpleSearchFilter']]
+      - [add, ['@Oncesk\LogReader\SourceLog\Filter\RegexFilter']]
+    public: true
+
+  Oncesk\LogReader\Modification\ModificationInterface:
+    class: Oncesk\LogReader\Modification\Modification
+    calls:
+      - [add, ['@Oncesk\LogReader\Modification\GroupModification']]
+      - [add, ['@Oncesk\LogReader\Modification\SortModification']]
+    public: true
+
+  Oncesk\LogReader\Flow\FlowResolverInterface:
+    class: Oncesk\LogReader\Flow\Resolver
+    public: true
+    calls:
+      - [setPipeFlow, ['@Oncesk\LogReader\Flow\PipeFlow']]
+      - [setGeneralFlow, ['@Oncesk\LogReader\Flow\GeneralFlow']]
+
+  Oncesk\LogReader\SourceLog\Reader\SourceLogReaderProviderInterface:
+    class: Oncesk\LogReader\SourceLog\Reader\SourceLogReaderProvider
+    public: true
+
+  Oncesk\LogReader\Record\RecordFactoryInterface:
+    class: Oncesk\LogReader\Record\RecordFactory
+    public: true
+
+  Oncesk\LogReader\Record\ColumnDefinitionInterface:
+    factory: ["%column_definition_factory.class%", "%column_definition_factory.method%"]
+    public: true
+
+  Symfony\Component\Console\Input\InputInterface:
+    synthetic: true
