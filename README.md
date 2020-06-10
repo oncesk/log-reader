@@ -6,7 +6,7 @@ Sometimes you need to reformat logs, filter and grouping. This tool will help yo
 #### Key features
 
  * formatting output
- * ready for piping, PHP generators help us to read => format => write logs one by one
+ * ready for piping, PHP generators help us to read => format => write logs one by one, it depends on php output buffer setting
  * sorting
  * filtering, regex is supporting
  * grouping items
