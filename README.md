@@ -58,3 +58,4 @@ Lets find how many times the index and contact pages were opened and find unique
 
  * simplify few things and refactor
  * add ability to read remote logs
+ * need more time to cover all features, make code clean, rewrite some fragments 
