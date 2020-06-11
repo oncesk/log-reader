@@ -4,6 +4,9 @@ $file = $argv[1] ?? null;
 if (!$file) {
     echo "Please, specify a log file!\n";
     exit(1);
+} else if (!is_readable($file)) {
+    echo "Error: No such file\n";
+    exit(2);
 }
 
 echo "list of webpages with most page views ordered from most pages views to less page views\n";
