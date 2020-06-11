@@ -3,13 +3,22 @@ Log Reader
 
 Sometimes you need to reformat logs, filter and grouping. This tool will help you to do that
 
-#### Key features
+## Key features
 
  * formatting output
  * ready for piping, PHP generators help us to read => format => write logs one by one, it depends on php output buffer setting
  * sorting
  * filtering, regex is supporting
  * grouping items
+ 
+## Installation
+
+You need to have git and composer installed
+
+ * ``git clone https://github.com/oncesk/log-reader.git``
+ * ``cd log-reader && composer install``
+ 
+## Features
  
 #### Options
 
@@ -46,7 +55,7 @@ Grouping is very similar to SQL behaviour
  * ``--group-by=path`` it will group all records by path column and count variable will be accessible ``{{ path_cnt }}``
  * ``--group-by=path --group-by=ip`` group items by path and ip
 
-#### Examples
+## Examples
 
 Parse webserver logs
 
@@ -58,7 +67,7 @@ Lets find how many times the index and contact pages were opened and find unique
 
 ``./bin/log-reader -o "{{ path }} {{ path_cnt }} {{ ip }} {{ ip_cnt }}" --sort-key=path_cnt --sort-order=desc --group-by=path --group-by=ip ./resources/webserver.log``
 
-#### Testing
+## Testing
 
 Unit tests:
 
@@ -68,7 +77,7 @@ Integration tests:
 
 ``php vendor/bin/phpunit tests/Integration``
 
-#### TODO
+## TODO
 
  * need more time to cover all features, make code clean, rewrite some code fragments, do optimization
  * simplify few things and refactor
