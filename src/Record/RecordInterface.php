@@ -2,7 +2,7 @@
 
 namespace Oncesk\LogReader\Record;
 
-interface RecordInterface
+interface RecordInterface extends ArrayConvertableInterface
 {
     /**
      * @param string $column

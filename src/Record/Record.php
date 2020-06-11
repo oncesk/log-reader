@@ -5,7 +5,7 @@ namespace Oncesk\LogReader\Record;
 /**
  * @codeCoverageIgnore
  */
-class Record implements RecordInterface, ArrayConvertableInterface, \ArrayAccess
+class Record implements RecordInterface, \ArrayAccess
 {
     /**
      * @var array

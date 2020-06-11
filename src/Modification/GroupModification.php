@@ -63,7 +63,7 @@ class GroupModification implements ModificationInterface, ApplicableAwareInterfa
     {
         //  todo refactor, rewrite and split to small code pieces
         if (empty($columns)) {
-            return $data;
+            return $data instanceof RecordSetInterface ? $data->toArray() : $data;
         }
         $column = array_shift($columns);
         $countColumn = $column . '_' . $cntColumn;

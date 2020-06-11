@@ -7,6 +7,7 @@ use Oncesk\LogReader\Modification\ModificationInterface;
 use Oncesk\LogReader\Output\OutputWriterInterface;
 use Oncesk\LogReader\Output\RecordOutputWriterInterface;
 use Oncesk\LogReader\Record\RecordFactoryInterface;
+use Oncesk\LogReader\Record\RecordInterface;
 use Oncesk\LogReader\Record\RecordSet;
 use Oncesk\LogReader\Record\RecordSetInterface;
 use Oncesk\LogReader\SourceLog\Reader\SourceLogReaderProviderInterface;
@@ -81,7 +82,10 @@ class GeneralFlow implements FlowInterface
             $this->outputWriter->write($set, $output);
         } else {
             foreach ($set as $item) {
-                $this->recordOutputWriter->write($item, $output);
+                $this->recordOutputWriter->write(
+                    $item instanceof RecordInterface ? $item->toArray() : $item,
+                    $output
+                );
             }
         }
         return 0;
