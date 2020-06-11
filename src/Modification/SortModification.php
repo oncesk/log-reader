@@ -53,7 +53,7 @@ class SortModification implements ModificationInterface, ApplicableAwareInterfac
         if ($this->isSortOrderDesc($this->getSortOrder())) {
             $items = array_reverse($items);
         }
-        //  todo refactor, rewrite with different way
+        //  todo refactor, rewrite in different way
         return new RecordSet($items);
     }
 
