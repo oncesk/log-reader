@@ -25,7 +25,7 @@ Use ``--schema`` option:
 
 And now you are able to change format, lets swap positions for path and ip
 
-``./bin/log-reader --schema="path ip" -o "{{ ip }} {{ path }}" file.log``
+``./bin/log-reader --schema="path ip" -o "{{ ip }} {{ path }}" resources/webserver.log``
 
 Use ``--pipe`` option for pipe the data
 
@@ -48,14 +48,29 @@ Grouping is very similar to SQL behaviour
 
 #### Examples
 
+Parse webserver logs
+
+``php bin/parser.php resources/webserver.log`` 
+
 Imagine that we have a log file with: path and ip ``/index 122.222.112.32``
 
 Lets find how many times the index and contact pages were opened and find unique ip addresses
 
-``./bin/log-reader -o "{{ path }} {{ path_cnt }} {{ ip }} {{ ip_cnt }}" --sort-key=path_cnt --sort-order=desc --group-by=path --group-by=ip ./tests/webserver.log``
+``./bin/log-reader -o "{{ path }} {{ path_cnt }} {{ ip }} {{ ip_cnt }}" --sort-key=path_cnt --sort-order=desc --group-by=path --group-by=ip ./resources/webserver.log``
+
+#### Testing
+
+Unit tests:
+
+``php vendor/bin/phpunit tests/Unit``
+
+Integration tests:
+
+``php vendor/bin/phpunit tests/Integration``
 
 #### TODO
 
+ * need more time to cover all features, make code clean, rewrite some code fragments, do optimization
  * simplify few things and refactor
  * add ability to read remote logs
- * need more time to cover all features, make code clean, rewrite some fragments 
+ * omit Record abstraction, use array instead
