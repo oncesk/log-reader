@@ -5,6 +5,7 @@ namespace Oncesk\LogReader\Flow;
 use Oncesk\LogReader\Modification\ApplicableAwareInterface;
 use Oncesk\LogReader\Modification\ModificationInterface;
 use Oncesk\LogReader\Output\OutputWriterInterface;
+use Oncesk\LogReader\Output\RecordOutputWriterInterface;
 use Oncesk\LogReader\Record\RecordFactoryInterface;
 use Oncesk\LogReader\Record\RecordSet;
 use Oncesk\LogReader\Record\RecordSetInterface;
@@ -35,22 +36,30 @@ class GeneralFlow implements FlowInterface
     private $outputWriter;
 
     /**
+     * @var RecordOutputWriterInterface
+     */
+    private $recordOutputWriter;
+
+    /**
      * GeneralFlow constructor.
      * @param SourceLogReaderProviderInterface $sourceLogReaderProvider
      * @param RecordFactoryInterface $recordFactory
      * @param ModificationInterface $modification
      * @param OutputWriterInterface $outputWriter
+     * @param RecordOutputWriterInterface $recordOutputWriter
      */
     public function __construct(
         SourceLogReaderProviderInterface $sourceLogReaderProvider,
         RecordFactoryInterface $recordFactory,
         ModificationInterface $modification,
-        OutputWriterInterface $outputWriter
+        OutputWriterInterface $outputWriter,
+        RecordOutputWriterInterface $recordOutputWriter
     ) {
         $this->sourceLogReaderProvider = $sourceLogReaderProvider;
         $this->recordFactory = $recordFactory;
         $this->modification = $modification;
         $this->outputWriter = $outputWriter;
+        $this->recordOutputWriter = $recordOutputWriter;
     }
 
     /**
@@ -67,7 +76,14 @@ class GeneralFlow implements FlowInterface
             $set->add($record);
         }
         $set = $this->applyModification($input, $set, $this->modification);
-        $this->outputWriter->write($set, $output);
+
+        if ($input->getOption('table')) {
+            $this->outputWriter->write($set, $output);
+        } else {
+            foreach ($set as $item) {
+                $this->recordOutputWriter->write($item, $output);
+            }
+        }
         return 0;
     }
 

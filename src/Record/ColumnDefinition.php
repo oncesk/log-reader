@@ -20,6 +20,11 @@ class ColumnDefinition implements ColumnDefinitionInterface
     private $format;
 
     /**
+     * @var array
+     */
+    private $formatColumns;
+
+    /**
      * ColumnDefinition constructor.
      * @param string $schema
      * @param string|null $format
@@ -43,7 +48,7 @@ class ColumnDefinition implements ColumnDefinitionInterface
             return $this->getSchema();
         }
 
-        return $this->columns = $m[1];
+        return $this->columns = array_merge($this->getSchema(), $m[1]);
     }
 
     /**
@@ -60,5 +65,18 @@ class ColumnDefinition implements ColumnDefinitionInterface
     public function getFormat(): string
     {
         return $this->format;
+    }
+
+    public function getFormatColumns(): array
+    {
+        if (null !== $this->formatColumns) {
+            return $this->formatColumns;
+        }
+
+        if (!$this->format || !preg_match_all('/\{\{\s([\w_-]+)\s\}\}/', $this->format, $m)) {
+            return $this->formatColumns = [];
+        }
+
+        return $this->formatColumns = $m[1];
     }
 }

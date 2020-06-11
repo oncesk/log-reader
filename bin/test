@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]
+then
+    echo -e "Please, specify a log file"
+    exit 1
+fi
+
+SCRIPT=`realpath $0`
+SCRIPTPATH=`dirname $SCRIPT`
+
+echo -e "list of webpages with most page views ordered from most pages views to less page views"
+php $SCRIPTPATH/log-reader -o "{{ path }} {{ path_cnt }} visits" --sort-key=path_cnt --sort-order=desc --group-by=path --group-unique=ip --schema="path ip" $1
+echo -e "\nlist of webpages with most unique page views also ordered"
+php $SCRIPTPATH/log-reader -o "{{ path }} {{ ip_unique }} unique views" --sort-key=ip_unique --sort-order=desc --group-by=path --group-unique=ip --schema="path ip" $1

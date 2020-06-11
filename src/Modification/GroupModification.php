@@ -100,6 +100,9 @@ class GroupModification implements ModificationInterface, ApplicableAwareInterfa
                 $result[$record[$column]]['items'][] = $record;
             }
         }
+        if ($uniqueColumn = $this->getGroupUniqueColumn()) {
+            $result = $this->calculateUnique($uniqueColumn, $result);
+        }
         return $result;
     }
 
@@ -130,6 +133,20 @@ class GroupModification implements ModificationInterface, ApplicableAwareInterfa
         return $result;
     }
 
+    private function calculateUnique(string $column, array $data): array
+    {
+        foreach ($data as &$record) {
+            $uniqueTempContainer = [];
+            foreach ($record['items'] as $item) {
+                if (isset($item[$column])) {
+                    isset($uniqueTempContainer[$item[$column]]) ? $uniqueTempContainer[$item[$column]]++ : $uniqueTempContainer[$item[$column]] = 1;
+                }
+            }
+            $record[$column . '_unique'] = count($uniqueTempContainer);
+        }
+        return $data;
+    }
+
     /**
      * @return string[]
      */
@@ -144,5 +161,13 @@ class GroupModification implements ModificationInterface, ApplicableAwareInterfa
     private function getGroupCountColumn()
     {
         return $this->input->getOption('group-by-cnt-column');
+    }
+
+    /**
+     * @return bool|string|string[]|null
+     */
+    private function getGroupUniqueColumn()
+    {
+        return $this->input->getOption('group-unique');
     }
 }

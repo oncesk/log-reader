@@ -30,14 +30,14 @@ class TableOutputWriter implements OutputWriterInterface
     public function write(RecordSetInterface $set, OutputInterface $output)
     {
         $table = new Table($output);
-        $columns = $this->columnDefinition->getColumns();
+        $columns = $this->columnDefinition->getFormatColumns();
         $items = $this->convertRecordSetToArray($set, $columns);
         $table
             ->setHeaders(array_map('ucfirst', $columns))
             ->addRows($items)
         ;
         $table->addRow(new TableSeparator());
-        $table->addRow([new TableCell('Total records ' . count($items), ['colspan' => count($this->columnDefinition->getColumns())])]);
+        $table->addRow([new TableCell('Total records ' . count($items), ['colspan' => count($columns)])]);
         $table->render();
     }
 
@@ -56,7 +56,6 @@ class TableOutputWriter implements OutputWriterInterface
                 $array[] = $item;
             }
         }
-        $columns = $this->columnDefinition->getColumns();
         $intersectColumns = array_flip($columns);
 
         return array_map(function ($record) use ($columns, $intersectColumns) {

@@ -101,6 +101,7 @@ class ConsoleCommand extends Command implements ContainerAwareInterface
             new InputOption('stdin', 'i', InputOption::VALUE_NONE, 'Read logs from stdin'),
             new InputOption('group-by', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Group items by a column.'),
             new InputOption('group-by-cnt-column', null, InputOption::VALUE_REQUIRED, 'Set column name for number of grouped items', 'cnt'),
+            new InputOption('group-unique', null, InputOption::VALUE_REQUIRED, 'Calculate unique items when using group by'),
             new InputOption('sort-key', 'sk', InputOption::VALUE_OPTIONAL, 'Set a column for sorting items.', 'path'),
             new InputOption('sort-order', 'so', InputOption::VALUE_OPTIONAL, 'Sort order ascending[asc] or descending[desc].', 'asc')
         ]);

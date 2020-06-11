@@ -18,4 +18,9 @@ interface ColumnDefinitionInterface
      * @return string
      */
     public function getFormat(): string;
+
+    /**
+     * @return array
+     */
+    public function getFormatColumns(): array;
 }
