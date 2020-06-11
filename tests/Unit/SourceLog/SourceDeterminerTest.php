@@ -1,6 +1,6 @@
 <?php
 
-namespace Oncesk\LogReader\Tests\SourceLog;
+namespace Oncesk\LogReader\Tests\Unit\SourceLog;
 
 use Oncesk\LogReader\SourceLog\SourceDeterminer;
 use PHPUnit\Framework\MockObject\MockObject;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Oncesk\LogReader\Tests\SourceLog\Reader;
+namespace Oncesk\LogReader\Tests\Unit\SourceLog\Reader;
 
 use PHPUnit\Framework\TestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Oncesk\LogReader\Tests\Modification;
+namespace Oncesk\LogReader\Tests\Unit\Modification;
 
 use Oncesk\LogReader\Modification\GroupModification;
 use Oncesk\LogReader\Modification\ModificationInterface;

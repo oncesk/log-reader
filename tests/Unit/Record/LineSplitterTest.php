@@ -1,6 +1,6 @@
 <?php
 
-namespace Oncesk\LogReader\Tests\Record;
+namespace Oncesk\LogReader\Tests\Unit\Record;
 
 use Oncesk\LogReader\Record\LineSplitter;
 use PHPUnit\Framework\TestCase;
