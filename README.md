@@ -1,7 +1,7 @@
 Log Reader
 =================
 
-Sometimes you need to reformat logs, filter and grouping. This tool will help you to do that
+Sometimes you need to reformat, filter and group the logs. This tool will help you to do that
 
 ## Key features
 
